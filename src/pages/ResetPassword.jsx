@@ -14,7 +14,8 @@ const ResetPassword = () => {
     const navigate = useNavigate()
     const [email, setEmail] = useState('')
     const [newPassword, setNewPassword] = useState('')
-    const [isEmailSent, setIsEmailSent] = useState('')
+    const [isEmailSent, setIsEmailSent] = useState(false)
+   // const [isEmailSent, setIsEmailSent] = useState('')
     const [otp, setOtp] = useState(0)
     const [isOtpSubmited, setIsOtpSubmited] = useState(false)
 
@@ -46,7 +47,8 @@ const ResetPassword = () => {
       const onSubmitEmail = async (e)=>{
         e.preventDefault();
           try{
-            const {data} = await axios.post(backendUrl + '/api/v1/auth/send-reset-otp', {email})
+            //const {data} = await axios.post(backendUrl + '/api/v1/auth/send-reset-otp', {email})
+            const {data} = await axios.post("/api/v1/auth/send-reset-otp", {email})
             data.success ? toast.success(data.message) : toast.error(data.message)
             data.success && setIsEmailSent(true)
           } catch (error) {
@@ -54,18 +56,26 @@ const ResetPassword = () => {
           }
       }
 
-      const onSubmitOtp = async (e)=> {
+        const onSubmitOtp = (e) => {
+        e.preventDefault();
+        const otpValue = inputRefs.current.map(e => e.value).join("");
+        setOtp(otpValue);
+        setIsOtpSubmited(true);
+      };
+
+      /*const onSubmitOtp = async (e)=> {
         e.preventDefault();
         const otpArray = inputRefs.current.map(e => e.value)
         setOtp(otpArray.join(''))
         setIsOtpSubmited(true)
-      }
+      }*/
 
       const onSubmitNewPassword = async (e) =>{
          e.preventDefault();
          try{
 
-          const {data} = await axios.post(backendUrl + '/api/v1/auth/reset-password', {email, otp, newPassword})
+          //const {data} = await axios.post(backendUrl + '/api/v1/auth/reset-password', {email, otp, newPassword})
+          const {data} = await axios.post("/api/v1/auth/reset-password", {email, otp, newPassword})
           data.success ? toast.success(data.message ): toast.error(data.message)
           data.success && navigate('/login')
          } catch (error) {

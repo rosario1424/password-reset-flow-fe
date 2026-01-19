@@ -22,10 +22,8 @@ const Login = () => {
     e.preventDefault();
 
     if (state === 'Sign Up') {
-      const { data } = await axios.post(
-        backendUrl + '/api/v1/auth/register',
-        { name, email, password }
-      );
+      //const { data } = await axios.post(backendUrl + '/api/v1/auth/register', { name, email, password });
+      const { data } = await axios.post("/api/v1/auth/register", { name, email, password });
 
       if (data.success) {
         localStorage.setItem("token", data.token);
@@ -37,10 +35,8 @@ const Login = () => {
       }
 
     } else {
-      const { data } = await axios.post(
-        backendUrl + '/api/v1/auth/login',
-        { email, password }
-      );
+      //const { data } = await axios.post(backendUrl + '/api/v1/auth/login', { email, password });
+      const { data } = await axios.post("/api/v1/auth/login", { email, password });
 
       if (data.success) {
         localStorage.setItem("token", data.token);   

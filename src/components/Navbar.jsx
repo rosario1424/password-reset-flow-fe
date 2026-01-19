@@ -15,7 +15,8 @@ const Navbar = () => {
          try {
              //axios.defaults.withCredentials = true;
 
-             const {data} = await axios.post(backendUrl + '/api/v1/auth/send-verify-otp')
+             //const {data} = await axios.post(backendUrl + '/api/v1/auth/send-verify-otp')
+             const {data} = await axios.post("/api/v1/auth/send-verify-otp")
 
              if(data.success){
               navigate('/email-verify')
