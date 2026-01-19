@@ -2,7 +2,8 @@ import React, { useContext } from 'react'
 import { assets } from '../assets/assets'
 import { useNavigate } from 'react-router-dom'
 import { AppContext } from '../context/AppContext'
-import axios from 'axios'
+import axios from '../utils/axios'
+//import axios from 'axios'
 import { toast } from 'react-toastify'
 
 const Navbar = () => {
@@ -28,7 +29,20 @@ const Navbar = () => {
          }
        }
 
-       const logout = async ()=> {
+       const logout = async () => {
+            try {
+              localStorage.removeItem("token");
+              setIsLoggedin(false);
+              setUserData(null);
+              navigate('/login');
+              } catch (error) {
+              toast.error("Logout failed");
+              console.error("Logout error:", error);
+            }
+            };
+
+
+       /*const logout = async ()=> {
         try {
           const logout = () => {
           localStorage.removeItem("token");
@@ -37,16 +51,16 @@ const Navbar = () => {
           navigate('/');
         };
 
-            /*axios.defaults.withCredentials = true
+            axios.defaults.withCredentials = true
             const { data } = await axios.post(backendUrl + '/api/v1/auth/logout')
             data.success && setIsLoggedin(false)
             data.success && setUserData(false)
-            navigate('/')*/
+            navigate('/')
 
         } catch (error) {
               toast.error(error.message)
         }
-       }
+       }*/
 
   return (
     <div className='w-full flex justify-between items-center p-4 sm:p-6 sm:px-24 absolute top-0'>
